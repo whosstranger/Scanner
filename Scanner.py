@@ -1,45 +1,38 @@
-import pyfiglet
-import sys
-import socket
+import pyfiglet, sys, socket, signal
 from datetime import datetime
 
-ascii_banner = pyfiglet.figlet_format("Scanner by stranger")
-print(ascii_banner)
+def def_handler(sig, frame):
+    print("\n\n[!] Going out...\n")
+    sys.exit(1)
 
-#Definicion del objetivo
+signal.signal(signal.SIGINT, def_handler)
+
+ascii_banner = pyfiglet.figlet_format("Scanner",width = 200, font = "ogre")
+print(ascii_banner)
 
 if len(sys.argv) == 2:
     target = socket.gethostbyname(sys.argv[1])
 else:
-    print("Argumento invalido")
+    print("Invalid argument..")
 
-#Agregar el objetivo como banner
-
-print("*" * 50)
-print("Escaneando direccion:" + target)
-print("El escaneo comenzo a las:" + str(datetime.now()))
-print("*" * 50)
+print("-" * 50)
+print("Address scanning: " + target)
+print("-" * 50 + '\n')
 
 try:
-    #Escaneo de puertos de 1 a 65,535
     for port in range(1,65535):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         socket.setdefaulttimeout(1)
-
-        #Resultado de los puertos
         result = s.connect_ex((target,port))
         if result == 0:
-            print("Puerto {} is open".format(port))
+            print("Port {} is open".format(port))
             s.close()
-
-except KeyboardInterrupt:
-    print("\n Saliendo...")
-    sys.exit()
+    print("\n [!]By WhosStranger... \n")
 
 except socket.gaierror:
-    print("\n No se pudo resolver la dirección dada")
+    print("\n [!]Cannot resolve the given address")
     sys.exit()
 
 except socket.error:
-    print("\n La direccion no responde")
+    print("\n [!]No response")
     sys.exit()
