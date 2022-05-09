@@ -1,8 +1,11 @@
 # Scanner
+<h1 align="center">
+  <img src="https://github.com/whosstranger/Scanner/blob/master/Images/Scanner.gif" alt="WhosStranger" />
+</h1>
 
-Scanner para detectar puertos abiertos, se recomienda el uso de Python3 y tener el archivo con permisos de ejecución.
+Scanner to detect open ports, it is recommended to use Python3 and to have the file with execution permissions.
 
-Uso: 
+Usage:
  ```sh
-  python3 Scanner.py "Dirección IP"
+  python3 Scanner.py 127.0.0.1
  ```
